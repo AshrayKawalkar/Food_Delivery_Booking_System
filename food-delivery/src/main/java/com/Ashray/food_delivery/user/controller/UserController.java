@@ -1,6 +1,7 @@
 package com.Ashray.food_delivery.user.controller;
 
 import com.Ashray.food_delivery.user.dto.RegisterUserRequest;
+import com.Ashray.food_delivery.user.dto.RegisterUserResponse;
 import com.Ashray.food_delivery.user.entity.User;
 import com.Ashray.food_delivery.user.service.UserService;
 import jakarta.validation.Valid;
@@ -16,14 +17,15 @@ public class UserController {
 
     private final UserService userService;
 
-@ResponseStatus(HttpStatus.OK)
+@ResponseStatus(HttpStatus.CREATED)
 @PostMapping("/register")
-    public ResponseEntity<String> userRegister( @Valid @RequestBody RegisterUserRequest request) {
+    public ResponseEntity<RegisterUserResponse> userRegister(@Valid @RequestBody RegisterUserRequest request) {
 
-        userService.userRegister(request);
 
-        return ResponseEntity.ok("User registered successfully");
-    }
+    RegisterUserResponse response = userService.userRegister(request);
+
+    return ResponseEntity.ok(response);
+}
 
 
 

@@ -1,6 +1,7 @@
 package com.Ashray.food_delivery.user.service.Impl;
 
 import com.Ashray.food_delivery.user.dto.RegisterUserRequest;
+import com.Ashray.food_delivery.user.dto.RegisterUserResponse;
 import com.Ashray.food_delivery.user.entity.User;
 import com.Ashray.food_delivery.user.repository.UserRepository;
 import com.Ashray.food_delivery.user.service.UserService;
@@ -14,7 +15,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public RegisterUserRequest userRegister(RegisterUserRequest request) {
+    public RegisterUserResponse userRegister(RegisterUserRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
         }
@@ -25,6 +26,12 @@ public class UserServiceImpl implements UserService {
         user.setPassword(request.getPassword());
         userRepository.save(user);
 
-        return request;
+        RegisterUserResponse response = new RegisterUserResponse();
+        response.setMessage("User registered successfully");
+        response.setId(user.getId());
+        response.setName(user.getName());
+        response.setEmail(user.getEmail());
+
+        return response;
     }
 }
