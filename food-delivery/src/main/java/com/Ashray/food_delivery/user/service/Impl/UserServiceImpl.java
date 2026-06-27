@@ -1,5 +1,6 @@
 package com.Ashray.food_delivery.user.service.Impl;
 
+import com.Ashray.food_delivery.exception.EmailAlreadyExistsException;
 import com.Ashray.food_delivery.user.dto.RegisterUserRequest;
 import com.Ashray.food_delivery.user.dto.RegisterUserResponse;
 import com.Ashray.food_delivery.user.entity.User;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public RegisterUserResponse userRegister(RegisterUserRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("Email already exists");
+            throw new EmailAlreadyExistsException("Email already exists: " );
         }
 
         User user = new User();
