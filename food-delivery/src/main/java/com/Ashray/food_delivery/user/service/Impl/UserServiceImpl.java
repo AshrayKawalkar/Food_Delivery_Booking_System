@@ -7,6 +7,7 @@ import com.Ashray.food_delivery.user.entity.User;
 import com.Ashray.food_delivery.user.repository.UserRepository;
 import com.Ashray.food_delivery.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public RegisterUserResponse userRegister(RegisterUserRequest request) {
@@ -24,7 +27,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
 
         RegisterUserResponse response = new RegisterUserResponse();
