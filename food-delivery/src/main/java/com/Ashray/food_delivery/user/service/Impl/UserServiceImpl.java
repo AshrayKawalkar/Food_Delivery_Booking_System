@@ -1,6 +1,9 @@
 package com.Ashray.food_delivery.user.service.Impl;
 
 import com.Ashray.food_delivery.exception.EmailAlreadyExistsException;
+import com.Ashray.food_delivery.exception.InvalidCredentialsException;
+import com.Ashray.food_delivery.user.dto.LoginRequest;
+import com.Ashray.food_delivery.user.dto.LoginResponce;
 import com.Ashray.food_delivery.user.dto.RegisterUserRequest;
 import com.Ashray.food_delivery.user.dto.RegisterUserResponse;
 import com.Ashray.food_delivery.user.entity.User;
@@ -37,5 +40,21 @@ public class UserServiceImpl implements UserService {
         response.setEmail(user.getEmail());
 
         return response;
+    }
+
+    @Override
+    public LoginResponce login(LoginRequest request) {
+
+        User user=userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() ->  new InvalidCredentialsException("Invalid email or password"));
+
+        if(!passwordEncoder.matches(request.getPassword(),user.getPassword())){
+            throw new InvalidCredentialsException("Invalid email or password");
+        }
+
+                LoginResponce responce= new LoginResponce();
+                responce.setMessage("Login successful");
+
+        return responce;
     }
 }
