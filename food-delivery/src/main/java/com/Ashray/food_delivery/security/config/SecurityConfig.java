@@ -1,4 +1,4 @@
-package com.Ashray.food_delivery.config;
+package com.Ashray.food_delivery.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
