@@ -1,10 +1,15 @@
 package com.Ashray.food_delivery.user.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginResponce {
 
-    private String message;
+  private String token;
 
 }

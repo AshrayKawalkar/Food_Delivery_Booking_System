@@ -23,7 +23,7 @@ public class JwtService {
     private long expirationTime;
 
 
-    private Key getSigningKey() {
+    private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(
                 secretKey.getBytes(StandardCharsets.UTF_8)
         );

@@ -2,6 +2,7 @@ package com.Ashray.food_delivery.user.service.Impl;
 
 import com.Ashray.food_delivery.exception.EmailAlreadyExistsException;
 import com.Ashray.food_delivery.exception.InvalidCredentialsException;
+import com.Ashray.food_delivery.security.jwt.JwtService;
 import com.Ashray.food_delivery.user.dto.LoginRequest;
 import com.Ashray.food_delivery.user.dto.LoginResponce;
 import com.Ashray.food_delivery.user.dto.RegisterUserRequest;
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
 
     @Override
@@ -52,8 +54,9 @@ public class UserServiceImpl implements UserService {
             throw new InvalidCredentialsException("Invalid email or password");
         }
 
-                LoginResponce responce= new LoginResponce();
-                responce.setMessage("Login successful");
+        String token = jwtService.generateToken(user.getEmail());
+        LoginResponce responce = new LoginResponce();
+        responce.setToken(token);
 
         return responce;
     }
