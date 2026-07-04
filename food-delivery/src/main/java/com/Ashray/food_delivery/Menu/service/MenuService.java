@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface MenuService {
 
-    MenuResponse createMenu(Long id , CreateMenuRequest request);
+    MenuResponse createMenu(Long restaurantId , CreateMenuRequest request);
     MenuResponse updateMenu(Long id, UpdateMenuRequest request);
     void deleteMenu(Long id);
 

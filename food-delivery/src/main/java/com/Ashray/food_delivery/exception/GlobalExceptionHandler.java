@@ -1,5 +1,6 @@
 package com.Ashray.food_delivery.exception;
 
+import com.Ashray.food_delivery.Menu.exception.MenuNotFoundException;
 import com.Ashray.food_delivery.Restaurant.exception.RestaurantNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RestaurantNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleRestaurantNotFoundException(RestaurantNotFoundException ex) {
+
+        ErrorResponse error= new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage()
+
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MenuNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMenuNotFoundException(MenuNotFoundException ex) {
 
         ErrorResponse error= new ErrorResponse(
                 LocalDateTime.now(),
