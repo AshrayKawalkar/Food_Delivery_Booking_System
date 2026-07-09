@@ -1,6 +1,7 @@
 package com.Ashray.food_delivery.Menu.repository;
 
 import com.Ashray.food_delivery.Menu.entity.Menu;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

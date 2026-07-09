@@ -14,17 +14,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/menu")
+@RequestMapping("/api/restaurants")
 public class MenuController {
 
 
     private final MenuService menuService;
 
 
-    @PostMapping("/{id}")
-    public ResponseEntity<MenuResponse> createMenu(@Valid @PathVariable Long id , @RequestBody CreateMenuRequest request) {
+    @PostMapping("/{restaurantId}/menus")
+    public ResponseEntity<MenuResponse> createMenu( @PathVariable Long restaurantId ,
+                                                    @Valid @RequestBody CreateMenuRequest request) {
 
-        MenuResponse menuCreate = menuService.createMenu(id, request);
+        MenuResponse menuCreate = menuService.createMenu(restaurantId, request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -32,18 +33,19 @@ public class MenuController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<MenuResponse> updateMenu(@Valid  @PathVariable Long id, @RequestBody UpdateMenuRequest request) {
+    @PutMapping("/menus/{id}")
+    public ResponseEntity<MenuResponse> updateMenu(  @PathVariable Long id,
+                                                     @Valid @RequestBody UpdateMenuRequest request) {
 
         MenuResponse response = menuService.updateMenu(id, request);
 
         return ResponseEntity
-                .status(HttpStatus.ACCEPTED)
+                .status(HttpStatus.OK)
                 .body(response);
 
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/menus/{id}")
     public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
 
         menuService.deleteMenu(id);
@@ -51,7 +53,7 @@ public class MenuController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/menus")
     public ResponseEntity<List<MenuResponse>> getAllMenu() {
         List<MenuResponse> allMenus = menuService.getAllMenus();
 
@@ -60,7 +62,7 @@ public class MenuController {
                 .body(allMenus);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/menus/{id}")
     public ResponseEntity<MenuResponse> getMenuById(@PathVariable Long id) {
 
         MenuResponse menuById = menuService.getMenuById(id);
@@ -69,4 +71,15 @@ public class MenuController {
                 .status(HttpStatus.OK)
                 .body(menuById);
     }
+
+    @GetMapping("/{restaurantId}/menus")
+    public ResponseEntity<List<MenuResponse>> getMenusByRestaurantId(
+            @PathVariable Long restaurantId)
+    {
+        List<MenuResponse> menus= menuService.getMenusByRestaurantId(restaurantId);
+
+        return ResponseEntity.ok(menus);
+
+    }
+
 }

@@ -1,5 +1,4 @@
 package com.Ashray.food_delivery.Menu.service.Impl;
-
 import com.Ashray.food_delivery.Menu.dto.CreateMenuRequest;
 import com.Ashray.food_delivery.Menu.dto.MenuResponse;
 import com.Ashray.food_delivery.Menu.dto.UpdateMenuRequest;
@@ -11,11 +10,10 @@ import com.Ashray.food_delivery.Restaurant.entity.Restaurant;
 import com.Ashray.food_delivery.Restaurant.exception.RestaurantNotFoundException;
 import com.Ashray.food_delivery.Restaurant.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -83,7 +81,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<MenuResponse> getAllMenus() {
 
-        List<Menu> all = menuRepository.findAll();
+        List<Menu> all = menuRepository.findAll(Sort.by("id"));
 
         return all.stream()
                 .map(this::mapToMenuResponse)
